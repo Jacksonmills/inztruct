@@ -1,7 +1,10 @@
 import { UserButton, currentUser } from '@clerk/nextjs';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import CopyToClipboard from './_components/copy-to-clipboard';
+import { Button } from '@/components/ui/button';
+import { Logo } from '@/components/logo';
+import Inztruct from '@/components/inztruct';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export default async function Home() {
   const user = await currentUser();
@@ -23,8 +26,14 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       <div className="w-full flex items-center justify-between">
-        <h1 className="font-bold text-6xl font-mono">INZTRUCT</h1>
-        <UserButton />
+        <Logo />
+        <div className='flex gap-2 items-center'>
+          <Button>
+            Create Instructions
+          </Button>
+          <UserButton />
+          <ThemeToggle />
+        </div>
       </div>
 
       <div className="h-[4em]" />
@@ -33,24 +42,16 @@ export default async function Home() {
         <div>
           <h2 className="text-xl font-bold font-mono">User Instructions</h2>
           {userData?.map(({ id, instructions }) => (
-            <div
-              key={id}
-              className="p-8 bg-white/10 border rounded flex flex-col items-center gap-4"
-            >
-              <CopyToClipboard text={instructions} />
-              <p>{instructions}</p>
+            <div key={id}>
+              <Inztruct instructions={instructions} />
             </div>
           ))}
         </div>
         <div>
           <h2 className="text-xl font-bold font-mono">Agent Instructions</h2>
           {agentData?.map(({ id, instructions }) => (
-            <div
-              key={id}
-              className="p-8 bg-white/10 border rounded flex flex-col items-center gap-4"
-            >
-              <CopyToClipboard text={instructions} />
-              <p>{instructions}</p>
+            <div key={id}>
+              <Inztruct instructions={instructions} />
             </div>
           ))}
         </div>
