@@ -3,88 +3,86 @@
 import { useChat } from 'ai/react';
 import React, { SyntheticEvent } from 'react';
 import { toast } from 'sonner';
-import { Button } from './ui/button';
 import LoadingBar from './loading-bar';
+import { Button } from './ui/button';
+import { Textarea } from './ui/textarea';
 
 export default function CopyToClipboard({ text }: { text: string; }) {
   const [instructions, setInstructions] = React.useState<string>(text);
 
-  const { input, handleInputChange, handleSubmit, isLoading, messages } = useChat({
-    initialInput: instructions,
-    body: {
-      instructions,
-    },
-    onResponse: () => {
-      toast('Instructions generated', {
+  const { input, setInput, handleInputChange, handleSubmit, isLoading, messages } =
+    useChat({
+      initialInput: instructions,
+      body: {
+        instructions,
+      }
+    });
+
+  const onSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    setInstructions('');
+    const formPromise = new Promise((resolve) => {
+      setInstructions(input);
+      handleSubmit(e);
+
+      resolve(
+        setInput(input),
+      );
+    });
+
+    formPromise.then(() => {
+      toast('Instructions augmented', {
         icon: '🎉',
       });
-    },
-  });
-
-  const onSubmit = (
-    e: SyntheticEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    setInstructions(input);
-    handleSubmit(e);
+    });
   };
 
   const lastMessage = messages[messages.length - 1];
-  const generatedInstructions = lastMessage?.role === "assistant" ? lastMessage.content : null;
+  const augmentedInstructions =
+    lastMessage?.role === 'assistant' ? lastMessage.content : null;
 
   return (
     <>
-      <form onSubmit={onSubmit} className='flex flex-col gap-6 w-full'>
-        <textarea
+      <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full">
+        <Textarea
           value={input}
           onChange={handleInputChange}
-          rows={18}
-          cols={50}
-          className={`w-full rounded shadow-md p-4 hover:bg-white/10 transition border`}
+          cols={60}
+          rows={10}
+          className={`w-full rounded shadow-md p-4 transition border`}
         />
-        {!isLoading && (
-          <Button
-            type="submit"
-          >
-            Generate Instructions
-          </Button>
-        )}
-        {isLoading && (
-          <LoadingBar />
-        )}
+        {!isLoading && <Button type="submit">Augment Instructions</Button>}
+        {isLoading && <LoadingBar />}
       </form>
-      <output className="space-y-10 my-10">
-        {generatedInstructions && (
-          <>
+      <output>
+        {augmentedInstructions && (
+          <div className='flex flex-col gap-4'>
             <div>
-              <h2
-                className="sm:text-4xl text-3xl font-mono font-bold"
-              >
-                Your generated instructions
+              <h2 className="sm:text-4xl text-3xl font-mono font-bold">
+                Your augmented instructions
               </h2>
             </div>
             <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
-              {generatedInstructions
-                .substring(generatedInstructions.indexOf('1') + 3)
+              {augmentedInstructions
+                .substring(augmentedInstructions.indexOf('1') + 3)
                 .split('2.')
-                .map((generatedInstructions) => {
+                .map((augmentedInstructions) => {
                   return (
                     <div
                       className="rounded shadow-md p-4 hover:bg-white/10 transition cursor-pointer border"
                       onClick={() => {
-                        navigator.clipboard.writeText(generatedInstructions);
+                        navigator.clipboard.writeText(augmentedInstructions);
                         toast('Instructions copied to clipboard', {
                           icon: '📋',
                         });
                       }}
-                      key={generatedInstructions}
+                      key={augmentedInstructions}
                     >
-                      <p>{generatedInstructions}</p>
+                      <p>{augmentedInstructions}</p>
                     </div>
                   );
                 })}
             </div>
-          </>
+          </div>
         )}
       </output>
     </>

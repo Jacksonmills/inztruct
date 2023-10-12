@@ -1,5 +1,5 @@
-import React from 'react';
 import { ClerkProvider } from '@clerk/nextjs';
+import React from 'react';
 import { ThemeProvider } from './theme-provider';
 
 export default function Providers({ children }: { children: React.ReactNode; }) {
@@ -10,9 +10,7 @@ export default function Providers({ children }: { children: React.ReactNode; }) 
       enableSystem
       disableTransitionOnChange
     >
-      <ClerkProvider>
-        {children}
-      </ClerkProvider>
+      <ClerkProvider>{children}</ClerkProvider>
     </ThemeProvider>
   );
 }
