@@ -1,24 +1,11 @@
 'use client';
 
-import React from 'react';
-import gsap from 'gsap';
-import { useIsomorphicLayoutEffect } from '../hooks/use-isomorphic-layout-effect';
+import Link from 'next/link';
 
 export const Logo = () => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const logoRef = React.useRef<HTMLHeadingElement>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
-      logoRef.current && (tl.fromTo(logoRef.current, { opacity: 0 }, { opacity: 1, duration: 1 }));
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <div ref={containerRef}>
-      <h1 className="font-bold text-6xl font-mono" ref={logoRef}>INZTRUCT</h1>
-    </div>
+    <Link href="/" className="flex items-center gap-4">
+      <h1 className="font-extrabold text-4xl md:text-6xl">InZtruct</h1>
+    </Link>
   );
 };
