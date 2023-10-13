@@ -84,7 +84,7 @@ export default function CreateInstructionsForm() {
                     name="agent_instructions"
                     value={instructions}
                     onChange={e => setInstructions(e.target.value)}
-                    rows={18}
+                    rows={8}
                     cols={50}
                     className={`w-full rounded shadow-md p-4 hover:bg-white/10 transition border`}
                   />
