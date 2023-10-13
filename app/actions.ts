@@ -6,6 +6,12 @@ import { cookies } from "next/headers";
 
 export type InstructionType = 'user_instructions' | 'agent_instructions';
 
+export interface Instruction {
+  id: string;
+  clerk_id: string;
+  instructions: string;
+}
+
 export const createInstructions = async (instructionType: InstructionType, instructions: string) => {
   const user = await currentUser();
   const cookieStore = cookies();
@@ -33,8 +39,6 @@ export const createInstructions = async (instructionType: InstructionType, instr
     console.error(error);
     return;
   }
-
-  console.log(data);
 
   return data;
 };
