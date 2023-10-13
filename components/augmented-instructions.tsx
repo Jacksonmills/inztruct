@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import LoadingBar from './loading-bar';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
+import { ScrollArea } from './ui/scroll-area';
 
 export default function AugmentedInstructions({ type, text }: { type: string; text: string; }) {
   const [instructions, setInstructions] = React.useState<string>(text);
@@ -76,7 +77,9 @@ export default function AugmentedInstructions({ type, text }: { type: string; te
               </h2>
             </div>
             <div className="flex flex-col gap-4">
-              {augmentedInstructions}
+              <ScrollArea className="h-48 p-4 w-full rounded-md border">
+                {augmentedInstructions}
+              </ScrollArea>
               <Button
                 onClick={() => {
                   navigator.clipboard.writeText(augmentedInstructions);
@@ -85,7 +88,7 @@ export default function AugmentedInstructions({ type, text }: { type: string; te
                   });
                 }}
               >
-                COPY TO CLIPBOARD
+                📋 Copy augmented instructions
               </Button>
             </div>
           </div>
