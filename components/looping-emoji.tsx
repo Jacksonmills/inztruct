@@ -8,7 +8,7 @@ export default function LoopingEmoji() {
   const [displayEmojis, setDisplayEmojis] = useState<string[]>(['🧠', '🚀', '📱']);
 
   function randomEmoji() {
-    const emojis = ['🧠', '👍', '💡', '🔧', '📈', '🔒', '🌐', '📱', '⚙️', '🚀', '💬'];
+    const emojis = ['🧠', '👍', '💡', '🔧', '📈', '🔒', '🌐', '📱', '⚙️', '🚀', '💬', '🕵️', '👤', '🧪'];
     return emojis[Math.floor(Math.random() * emojis.length)];
   }
 

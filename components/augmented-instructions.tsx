@@ -7,7 +7,7 @@ import LoadingBar from './loading-bar';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 
-export default function CopyToClipboard({ type, text }: { type: string; text: string; }) {
+export default function AugmentedInstructions({ type, text }: { type: string; text: string; }) {
   const [instructions, setInstructions] = React.useState<string>(text);
 
   const { input, setInput, handleInputChange, handleSubmit, isLoading, messages } =
@@ -31,8 +31,9 @@ export default function CopyToClipboard({ type, text }: { type: string; text: st
     });
 
     formPromise.then(() => {
-      toast('Instructions augmented', {
-        icon: '🎉',
+      toast('Instructions augmenting...', {
+        icon: '🧪',
+        duration: 5000,
       });
     });
   };
@@ -66,7 +67,7 @@ export default function CopyToClipboard({ type, text }: { type: string; text: st
         )}
         {isLoading && <LoadingBar />}
       </form>
-      <output>
+      <output className='w-full'>
         {augmentedInstructions && (
           <div className='flex flex-col gap-4'>
             <div>
@@ -74,26 +75,18 @@ export default function CopyToClipboard({ type, text }: { type: string; text: st
                 Your augmented instructions
               </h2>
             </div>
-            <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
-              {augmentedInstructions
-                .substring(augmentedInstructions.indexOf('1') + 3)
-                .split('2.')
-                .map((augmentedInstructions) => {
-                  return (
-                    <div
-                      className="rounded shadow-md p-4 hover:bg-white/10 transition cursor-pointer border"
-                      onClick={() => {
-                        navigator.clipboard.writeText(augmentedInstructions);
-                        toast('Instructions copied to clipboard', {
-                          icon: '📋',
-                        });
-                      }}
-                      key={augmentedInstructions}
-                    >
-                      <p>{augmentedInstructions}</p>
-                    </div>
-                  );
-                })}
+            <div className="flex flex-col gap-4">
+              {augmentedInstructions}
+              <Button
+                onClick={() => {
+                  navigator.clipboard.writeText(augmentedInstructions);
+                  toast('Instructions copied to clipboard', {
+                    icon: '📋',
+                  });
+                }}
+              >
+                COPY TO CLIPBOARD
+              </Button>
             </div>
           </div>
         )}

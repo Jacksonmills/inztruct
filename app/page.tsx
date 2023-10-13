@@ -41,7 +41,7 @@ export default async function Home() {
       <div className='flex flex-col gap-6'>
         <div className="grid md:grid-cols-2 gap-8 grid-flow-row">
           <div className='flex flex-col gap-4'>
-            <h2 className="text-xl font-bold font-mono">User Instructions</h2>
+            <h2 className="text-xl font-bold font-mono sr-only">User Instructions</h2>
             <div className='flex flex-col gap-8'>
               {shuffledUserData?.map(({ id, instructions }) => (
                 <div key={id}>
@@ -51,7 +51,7 @@ export default async function Home() {
             </div>
           </div>
           <div className='flex flex-col gap-4'>
-            <h2 className="text-xl font-bold font-mono">Agent Instructions</h2>
+            <h2 className="text-xl font-bold font-mono sr-only">Agent Instructions</h2>
             <div className='flex flex-col gap-8'>
               {shuffledAgentData?.map(({ id, instructions }) => (
                 <div key={id}>

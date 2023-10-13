@@ -37,13 +37,13 @@ export default function CreateInstructionsForm() {
   return (
     <Tabs defaultValue="user">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="user" onClick={() => setInstructionType('user_instructions')}>User</TabsTrigger>
-        <TabsTrigger value="agent" onClick={() => setInstructionType('agent_instructions')}>Agent</TabsTrigger>
+        <TabsTrigger className='flex items-center gap-2' value="user" onClick={() => setInstructionType('user_instructions')}>👤 User</TabsTrigger>
+        <TabsTrigger className='flex items-center gap-2' value="agent" onClick={() => setInstructionType('agent_instructions')}>🕵️ Agent</TabsTrigger>
       </TabsList>
       <TabsContent value="user">
         <Card>
           <CardHeader>
-            <CardTitle>User Instructions</CardTitle>
+            <CardTitle>👤 User Instructions</CardTitle>
             <CardDescription>
               What would you like ChatGPT to know about you to provide better responses?
             </CardDescription>
@@ -70,7 +70,7 @@ export default function CreateInstructionsForm() {
       <TabsContent value="agent">
         <Card>
           <CardHeader>
-            <CardTitle>Agent Instructions</CardTitle>
+            <CardTitle>🕵️ Agent Instructions</CardTitle>
             <CardDescription>
               How would you like ChatGPT to respond?
             </CardDescription>
