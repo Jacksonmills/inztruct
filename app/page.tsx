@@ -5,6 +5,17 @@ import { cookies } from 'next/headers';
 
 export const revalidate = 0;
 
+function shuffleData(data: Record<string, any>[]) {
+  const shuffled = [...data];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * i);
+    const temp = shuffled[i];
+    shuffled[i] = shuffled[j];
+    shuffled[j] = temp;
+  }
+  return shuffled;
+}
+
 export default async function Home() {
   const user = await currentUser();
   const cookieStore = cookies();
@@ -20,18 +31,21 @@ export default async function Home() {
 
   if (userError || agentError) return <div>error</div>;
 
+  const shuffledUserData = shuffleData(userData);
+  const shuffledAgentData = shuffleData(agentData);
+
   return (
     <div className='flex flex-col gap-12'>
-      <h2 className='text-4xl font-bold'>Welcome{user && `, ${user?.username}`}!</h2>
+      <h1 className='sr-only'>Inztruct Home</h1>
+      <h2 className='font-extrabold text-4xl md:text-6xl'>Welcome{user && `, ${user?.username}`}!</h2>
       <div className='flex flex-col gap-6'>
-        <h3 className='text-2xl font-bold'>Featured instructions</h3>
         <div className="grid md:grid-cols-2 gap-8 grid-flow-row">
           <div className='flex flex-col gap-4'>
             <h2 className="text-xl font-bold font-mono">User Instructions</h2>
             <div className='flex flex-col gap-8'>
-              {userData?.map(({ id, instructions }) => (
+              {shuffledUserData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct instructions={instructions} />
+                  <Inztruct type="user" instructions={instructions} />
                 </div>
               ))}
             </div>
@@ -39,9 +53,9 @@ export default async function Home() {
           <div className='flex flex-col gap-4'>
             <h2 className="text-xl font-bold font-mono">Agent Instructions</h2>
             <div className='flex flex-col gap-8'>
-              {agentData?.map(({ id, instructions }) => (
+              {shuffledAgentData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct instructions={instructions} />
+                  <Inztruct type="agent" instructions={instructions} />
                 </div>
               ))}
             </div>
