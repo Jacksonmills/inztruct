@@ -33,11 +33,12 @@ export default async function Home() {
 
   const shuffledUserData = shuffleData(userData);
   const shuffledAgentData = shuffleData(agentData);
+  const userName = user?.username || `${user?.firstName} ${user?.lastName}` || null;
 
   return (
     <div className='flex flex-col gap-12'>
       <h1 className='sr-only'>Inztruct Home</h1>
-      <h2 className='font-extrabold text-4xl md:text-6xl'>Welcome{user && `, ${user?.username}`}!</h2>
+      <h2 className='font-extrabold text-4xl md:text-6xl'>Welcome{userName !== null && `, ${userName}`}!</h2>
       <div className='flex flex-col gap-6'>
         <div className="grid md:grid-cols-2 gap-8 grid-flow-row">
           <div className='flex flex-col gap-4'>
