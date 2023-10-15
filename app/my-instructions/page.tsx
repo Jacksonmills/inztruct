@@ -3,11 +3,13 @@ import { currentUser } from "@clerk/nextjs";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Instruction } from "../actions";
+import ServerChatCompletion from "@/components/server-chat-completion";
 
 export const revalidate = 0;
 
 export default async function Home() {
   const user = await currentUser();
+  console.log(user);
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 
@@ -18,7 +20,9 @@ export default async function Home() {
 
   return (
     <div className='flex flex-col gap-12'>
-      <h1 className="font-extrabold text-4xl md:text-6xl">My Instructions</h1>
+      <h1 className="font-extrabold text-4xl md:text-6xl">
+        <ServerChatCompletion prompt="An h1 title for the users page of saved/stored instructions.((min:2. max:5))((Do not wrap in quotes))" />
+      </h1>
       <div className="grid md:grid-cols-2 gap-8 grid-flow-row">
         <div className='flex flex-col gap-4'>
           <h2 className="text-xl font-bold font-mono sr-only">User Instructions</h2>
