@@ -1,14 +1,13 @@
 'use client';
 
+import { useUser } from '@clerk/nextjs';
 import { useChat } from 'ai/react';
 import React, { SyntheticEvent } from 'react';
 import { toast } from 'sonner';
 import LoadingBar from './loading-bar';
 import { Button } from './ui/button';
 import { ScrollArea } from './ui/scroll-area';
-import { Textarea } from './ui/textarea';
 import WordCount from './word-count';
-import { useUser } from '@clerk/nextjs';
 
 export default function AugmentedInstructions({
   type,
@@ -75,7 +74,9 @@ export default function AugmentedInstructions({
                 <>
                   Augment Instructions <WordCount text={input} />
                 </>
-              ) : 'Sign in to augment'}
+              ) : (
+                'Sign in to augment'
+              )}
             </Button>
             <Button
               type="button"
