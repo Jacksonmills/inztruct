@@ -40,7 +40,7 @@ export default async function Home() {
     <div className="flex flex-col gap-12">
       <h1 className="sr-only">Inztruct Home</h1>
       <h2 className="font-extrabold text-4xl md:text-6xl">
-        <ServerChatCompletion prompt={`Welcome the user(${userName}) to our webapp called INZTRUCT(A webapp for saving and sharing chatgpt style custom instructions). ((min: 3 word, max: 10 words)). ((use the word "inztruct" in your message))((use of word "welcome" not required))((always use a single emoji))`} />
+        <ServerChatCompletion prompt={`Welcome the user(${userName}(((always directly refer to ${userName}.)))) to our webapp called INZTRUCT(Store, share, and augment custom instructions for LLM.). ((min: 3 word. max: 10 words.)). ((use the word "inztruct" in your message.))((use of word "welcome" not required.))((emojiLimit: 1))`} />
       </h2>
       <div className="flex flex-col gap-6">
         <div className="grid md:grid-cols-2 gap-8 grid-flow-row">
