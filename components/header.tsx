@@ -32,7 +32,7 @@ export default function Header() {
         </Link>
       </nav>
       <LoopingEmoji />
-      <UserButton />
+      <UserButton afterSignOutUrl={`/`} />
     </header>
   );
 }
