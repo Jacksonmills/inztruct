@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
@@ -72,5 +74,18 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    plugin(({ addUtilities }) => {
+      const newUtilities = {
+        '.italic-reverse': {
+          display: 'inline-block',
+          transform:
+            'scale(1) rotate(0deg) translate(0px, 0px) skew(20deg, 0deg)',
+        },
+      };
+
+      addUtilities(newUtilities);
+    }),
+  ],
 };
