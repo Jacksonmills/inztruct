@@ -24,11 +24,13 @@ export default async function Home() {
 
   const { data: userData, error: userError } = await supabase
     .from('user_instructions')
-    .select();
+    .select()
+    .limit(3);
 
   const { data: agentData, error: agentError } = await supabase
     .from('agent_instructions')
-    .select();
+    .select()
+    .limit(3);
 
   if (userError || agentError) return <div>error</div>;
 

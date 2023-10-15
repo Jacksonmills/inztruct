@@ -1,4 +1,4 @@
-import { UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import HamburgerMenu from './hamburger-menu';
 import { Logo } from './logo';
@@ -24,15 +24,24 @@ export default function Header() {
       </div>
       <nav className="hidden md:flex gap-6 items-center">
         <Logo />
-        <Link href="/create">
-          <Button>Create</Button>
-        </Link>
-        <Link href="/my-instructions">
-          <Button>My Instructions</Button>
-        </Link>
+        <SignedIn>
+          <Link href="/create">
+            <Button>Create</Button>
+          </Link>
+          <Link href="/my-instructions">
+            <Button>My Instructions</Button>
+          </Link>
+        </SignedIn>
       </nav>
       <LoopingEmoji />
-      <UserButton afterSignOutUrl={`/`} />
+      <SignedIn>
+        <UserButton afterSignOutUrl={`/sign-in`} />
+      </SignedIn>
+      <SignedOut>
+        <Link href="/sign-in">
+          <Button>Sign In</Button>
+        </Link>
+      </SignedOut>
     </header>
   );
 }
