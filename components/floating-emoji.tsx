@@ -15,14 +15,14 @@ export default function FloatingEmoji() {
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
-        defaults: { ease: 'power2.inOut', duration: 2 }
+        defaults: { ease: 'power2.inOut', duration: 2 },
       });
 
       tl.to(
-        emojiRefs.map(ref => ref.current),
+        emojiRefs.map((ref) => ref.current),
         {
           scrollTrigger: {
-            trigger: emojiRefs.map(ref => ref.current),
+            trigger: emojiRefs.map((ref) => ref.current),
             start: 'top top',
             end: 'bottom bottom',
             scrub: true,
@@ -38,10 +38,25 @@ export default function FloatingEmoji() {
   }, []);
 
   return (
-    <div ref={containerRef} className='opacity-5'>
-      <div ref={emojiRefs[0]} className='z-0 select-none pointer-events-none absolute text-[300px] top-32 right-[-10vw]'>👁️</div>
-      <div ref={emojiRefs[1]} className='z-0 select-none pointer-events-none absolute text-[300px] top-1/2 right-2/4'>📋</div>
-      <div ref={emojiRefs[2]} className='z-0 select-none pointer-events-none absolute text-[300px] bottom-9 right-[-10vw]'>🧠</div>
+    <div ref={containerRef} className="opacity-5">
+      <div
+        ref={emojiRefs[0]}
+        className="z-0 select-none pointer-events-none absolute text-[300px] top-32 right-[-10vw]"
+      >
+        👁️
+      </div>
+      <div
+        ref={emojiRefs[1]}
+        className="z-0 select-none pointer-events-none absolute text-[300px] top-1/2 right-2/4"
+      >
+        📋
+      </div>
+      <div
+        ref={emojiRefs[2]}
+        className="z-0 select-none pointer-events-none absolute text-[300px] bottom-9 right-[-10vw]"
+      >
+        🧠
+      </div>
     </div>
   );
 }

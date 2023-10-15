@@ -53,8 +53,9 @@ export default function LoadingBar() {
         ref={loadingContainerRef}
       >
         <div
-          className={`absolute bg-black dark:bg-white h-2.5 rounded-full ${isFlipped ? 'right-0' : ''
-            }`}
+          className={`absolute bg-black dark:bg-white h-2.5 rounded-full ${
+            isFlipped ? 'right-0' : ''
+          }`}
           ref={progressRef}
         />
       </div>

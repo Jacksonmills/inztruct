@@ -1,19 +1,38 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { gsap } from 'gsap';
 import { useIsomorphicLayoutEffect } from '@/hooks/use-isomorphic-layout-effect';
+import { gsap } from 'gsap';
+import { useRef, useState } from 'react';
 
 export default function LoopingEmoji() {
-  const [displayEmojis, setDisplayEmojis] = useState<string[]>(['🧠', '🚀', '📱']);
+  const [displayEmojis, setDisplayEmojis] = useState<string[]>([
+    '🧠',
+    '🚀',
+    '📱',
+  ]);
 
   function randomEmoji() {
-    const emojis = ['🧠', '👍', '💡', '🔧', '📈', '🔒', '🌐', '📱', '⚙️', '🚀', '💬', '🕵️', '👤', '🧪'];
+    const emojis = [
+      '🧠',
+      '👍',
+      '💡',
+      '🔧',
+      '📈',
+      '🔒',
+      '🌐',
+      '📱',
+      '⚙️',
+      '🚀',
+      '💬',
+      '🕵️',
+      '👤',
+      '🧪',
+    ];
     return emojis[Math.floor(Math.random() * emojis.length)];
   }
 
   const getNextEmojis = () => {
-    setDisplayEmojis(prev => prev.map(() => randomEmoji()));
+    setDisplayEmojis((prev) => prev.map(() => randomEmoji()));
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,7 +46,6 @@ export default function LoopingEmoji() {
     const duration = 0.5;
     const staggerDelay = 0.3;
 
-
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         repeat: -1,
@@ -37,7 +55,7 @@ export default function LoopingEmoji() {
       });
 
       tl.fromTo(
-        emojiRefs.map(ref => ref.current),
+        emojiRefs.map((ref) => ref.current),
         {
           scale: 0,
           opacity: 0,
@@ -49,7 +67,7 @@ export default function LoopingEmoji() {
         }
       );
       tl.to(
-        emojiRefs.map(ref => ref.current),
+        emojiRefs.map((ref) => ref.current),
         {
           scale: 0,
           opacity: 0,

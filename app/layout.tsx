@@ -1,12 +1,11 @@
-import './globals.css';
+import Footer from '@/components/footer';
+import Header from '@/components/header';
+import Providers from '@/components/providers';
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
-import { Analytics } from '@vercel/analytics/react';
-import Providers from '@/components/providers';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import FloatingEmoji from '@/components/floating-emoji';
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

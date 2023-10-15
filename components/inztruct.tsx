@@ -1,6 +1,5 @@
 'use client';
 
-import { Bot, User } from 'lucide-react';
 import AugmentedInstructions from './augmented-instructions';
 
 export default function Inztruct({
@@ -13,11 +12,11 @@ export default function Inztruct({
   return (
     <div className="p-8 border rounded flex flex-col items-center gap-4">
       {type === 'user' ? (
-        <span className='w-full flex items-center font-bold font-mono uppercase text-xl'>
+        <span className="w-full flex items-center font-bold font-mono uppercase text-xl">
           👥 User
         </span>
       ) : (
-        <span className='w-full flex items-center font-bold font-mono uppercase text-xl'>
+        <span className="w-full flex items-center font-bold font-mono uppercase text-xl">
           🕵️ Agent
         </span>
       )}

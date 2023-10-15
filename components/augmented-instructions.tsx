@@ -5,20 +5,32 @@ import React, { SyntheticEvent } from 'react';
 import { toast } from 'sonner';
 import LoadingBar from './loading-bar';
 import { Button } from './ui/button';
-import { Textarea } from './ui/textarea';
 import { ScrollArea } from './ui/scroll-area';
+import { Textarea } from './ui/textarea';
 
-export default function AugmentedInstructions({ type, text }: { type: string; text: string; }) {
+export default function AugmentedInstructions({
+  type,
+  text,
+}: {
+  type: string;
+  text: string;
+}) {
   const [instructions, setInstructions] = React.useState<string>(text);
 
-  const { input, setInput, handleInputChange, handleSubmit, isLoading, messages } =
-    useChat({
-      initialInput: instructions,
-      body: {
-        type,
-        instructions,
-      }
-    });
+  const {
+    input,
+    setInput,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    messages,
+  } = useChat({
+    initialInput: instructions,
+    body: {
+      type,
+      instructions,
+    },
+  });
 
   const onSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     setInstructions('');
@@ -26,9 +38,7 @@ export default function AugmentedInstructions({ type, text }: { type: string; te
       setInstructions(input);
       handleSubmit(e);
 
-      resolve(
-        setInput(input),
-      );
+      resolve(setInput(input));
     });
 
     formPromise.then(() => {
@@ -54,23 +64,29 @@ export default function AugmentedInstructions({ type, text }: { type: string; te
           className={`w-full rounded shadow-md p-4 transition border`}
         />
         {!isLoading && (
-          <div className='flex gap-2'>
-            <Button type="submit" className='w-full'>Augment Instructions</Button>
-            <Button type="button" size={`icon`} onClick={() => {
-              navigator.clipboard.writeText(input);
-              toast('Instructions copied to clipboard', {
-                icon: '📋',
-              });
-            }}>
+          <div className="flex gap-2">
+            <Button type="submit" className="w-full">
+              Augment Instructions
+            </Button>
+            <Button
+              type="button"
+              size={`icon`}
+              onClick={() => {
+                navigator.clipboard.writeText(input);
+                toast('Instructions copied to clipboard', {
+                  icon: '📋',
+                });
+              }}
+            >
               📋
             </Button>
           </div>
         )}
         {isLoading && <LoadingBar />}
       </form>
-      <output className='w-full'>
+      <output className="w-full">
         {augmentedInstructions && (
-          <div className='flex flex-col gap-4'>
+          <div className="flex flex-col gap-4">
             <div>
               <h2 className="sm:text-4xl text-3xl font-mono font-bold">
                 Your augmented instructions

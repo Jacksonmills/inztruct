@@ -1,11 +1,17 @@
 'use client';
 
-import React from 'react';
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
-import { Button } from './ui/button';
 import { Menu } from 'lucide-react';
-import { Logo } from './logo';
 import Link from 'next/link';
+import React from 'react';
+import { Logo } from './logo';
+import { Button } from './ui/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './ui/sheet';
 
 export default function HamburgerMenu() {
   const [open, setOpen] = React.useState(false);
@@ -15,29 +21,34 @@ export default function HamburgerMenu() {
         <Menu />
       </SheetTrigger>
       <SheetContent side={`left`}>
-        <SheetHeader className='flex gap-3'>
-          <SheetTitle><Logo /></SheetTitle>
+        <SheetHeader className="flex gap-3">
+          <SheetTitle>
+            <Logo />
+          </SheetTitle>
           <nav className="flex flex-col gap-6">
-            <Link href="/" onClick={
-              () => {
+            <Link
+              href="/"
+              onClick={() => {
                 setOpen(false);
-              }
-            }>
-              <Button className='w-full'>Home</Button>
+              }}
+            >
+              <Button className="w-full">Home</Button>
             </Link>
-            <Link href="/create" onClick={
-              () => {
+            <Link
+              href="/create"
+              onClick={() => {
                 setOpen(false);
-              }
-            }>
-              <Button className='w-full'>Create</Button>
+              }}
+            >
+              <Button className="w-full">Create</Button>
             </Link>
-            <Link href="/my-instructions" onClick={
-              () => {
+            <Link
+              href="/my-instructions"
+              onClick={() => {
                 setOpen(false);
-              }
-            }>
-              <Button className='w-full'>My Instructions</Button>
+              }}
+            >
+              <Button className="w-full">My Instructions</Button>
             </Link>
           </nav>
         </SheetHeader>
