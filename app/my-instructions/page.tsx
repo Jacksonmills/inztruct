@@ -23,11 +23,11 @@ export default async function Home() {
   if (userError || agentError) return <div>error</div>;
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-12 w-full">
       <h1 className="font-extrabold text-4xl md:text-6xl">
         <ServerChatCompletion prompt="An h1 title for the users page of saved/stored instructions.((min:2. max:5))((Do not wrap in quotes))" />
       </h1>
-      <div className="grid md:grid-cols-2 gap-8 grid-flow-row">
+      <div className="grid lg:grid-cols-2 gap-8 grid-flow-row">
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-bold font-mono sr-only">
             User Instructions

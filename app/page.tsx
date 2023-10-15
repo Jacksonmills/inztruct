@@ -40,7 +40,7 @@ export default async function Home() {
     user?.username || `${user?.firstName} ${user?.lastName}` || null;
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-12 w-full">
       <h1 className="sr-only">Inztruct Home</h1>
       <h2 className="font-extrabold text-4xl md:text-6xl">
         <ServerChatCompletion
@@ -48,7 +48,7 @@ export default async function Home() {
         />
       </h2>
       <div className="flex flex-col gap-6">
-        <div className="grid md:grid-cols-2 gap-8 grid-flow-row">
+        <div className="grid lg:grid-cols-2 gap-8 grid-flow-row">
           <div className="flex flex-col gap-4">
             <h2 className="text-xl font-bold font-mono sr-only">
               User Instructions

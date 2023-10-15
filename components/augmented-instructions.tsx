@@ -7,6 +7,8 @@ import LoadingBar from './loading-bar';
 import { Button } from './ui/button';
 import { ScrollArea } from './ui/scroll-area';
 import { Textarea } from './ui/textarea';
+import WordCount from './word-count';
+import { useUser } from '@clerk/nextjs';
 
 export default function AugmentedInstructions({
   type,
@@ -15,6 +17,7 @@ export default function AugmentedInstructions({
   type: string;
   text: string;
 }) {
+  const { isSignedIn } = useUser();
   const [instructions, setInstructions] = React.useState<string>(text);
 
   const {
@@ -56,17 +59,23 @@ export default function AugmentedInstructions({
   return (
     <>
       <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full">
-        <Textarea
-          value={input}
-          onChange={handleInputChange}
-          rows={8}
-          cols={60}
-          className={`w-full rounded shadow-md p-4 transition border`}
-        />
+        <ScrollArea className="h-48 p-4 w-full rounded-md border">
+          <textarea
+            value={input}
+            onChange={handleInputChange}
+            maxLength={1500}
+            rows={60}
+            className={`w-full min-w-max resize-none h-auto bg-transparent border-none focus:ring-0 focus:outline-none`}
+          />
+        </ScrollArea>
         {!isLoading && (
           <div className="flex gap-2">
-            <Button type="submit" className="w-full">
-              Augment Instructions
+            <Button type="submit" className="w-full" disabled={!isSignedIn}>
+              {isSignedIn ? (
+                <>
+                  Augment Instructions <WordCount text={input} />
+                </>
+              ) : 'Sign in to augment'}
             </Button>
             <Button
               type="button"

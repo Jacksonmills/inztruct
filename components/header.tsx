@@ -23,7 +23,9 @@ export default function Header() {
         <HamburgerMenu />
       </div>
       <nav className="hidden md:flex gap-6 items-center">
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
         <SignedIn>
           <Link href="/create">
             <Button>Create</Button>
