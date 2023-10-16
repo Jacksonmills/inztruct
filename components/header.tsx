@@ -1,11 +1,13 @@
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { UserButton, currentUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import HamburgerMenu from './hamburger-menu';
 import { Logo } from './logo';
 import LoopingEmoji from './looping-emoji';
 import { Button } from './ui/button';
 
-export default function Header() {
+export default async function Header() {
+  const user = await currentUser();
+
   return (
     <header
       className="
@@ -26,24 +28,25 @@ export default function Header() {
         <Link href="/" className="text-2xl md:text-4xl lg:text-6xl">
           <Logo />
         </Link>
-        <SignedIn>
-          <Link href="/create">
-            <Button>Create</Button>
-          </Link>
-          <Link href="/my-instructions">
-            <Button>My Instructions</Button>
-          </Link>
-        </SignedIn>
+        {user && (
+          <>
+            <Link href="/create">
+              <Button>Create</Button>
+            </Link>
+            <Link href="/my-instructions">
+              <Button>My Instructions</Button>
+            </Link>
+          </>
+        )}
       </nav>
       <LoopingEmoji />
-      <SignedIn>
+      {user ? (
         <UserButton afterSignOutUrl={`/sign-in`} />
-      </SignedIn>
-      <SignedOut>
+      ) : (
         <Link href="/sign-in">
           <Button>Sign In</Button>
         </Link>
-      </SignedOut>
+      )}
     </header>
   );
 }
