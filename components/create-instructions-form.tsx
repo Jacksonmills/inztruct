@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import AutoSizeTextArea from './auto-size-text-area';
 import { Button } from './ui/button';
 import {
   Card,
@@ -14,16 +15,21 @@ import {
   CardTitle,
 } from './ui/card';
 import { Label } from './ui/label';
-import { Textarea } from './ui/textarea';
+import { ScrollArea } from './ui/scroll-area';
+import WordCount from './word-count';
+import next from 'next';
 
 export default function CreateInstructionsForm() {
   const [instructionType, setInstructionType] =
     useState<InstructionType>('user_instructions');
-  const [instructions, setInstructions] = useState('');
+  const [userInstructions, setUserInstructions] = useState<string>('');
+  const [agentInstructions, setAgentInstructions] = useState<string>('');
 
   const router = useRouter();
   const handleSubmit = () => {
-    createInstructions(instructionType, instructions)
+    let nextInstructions = userInstructions;
+    if (instructionType === 'agent_instructions') nextInstructions = agentInstructions;
+    createInstructions(instructionType, nextInstructions)
       .then(() => {
         toast.success('Instructions created');
       })
@@ -37,7 +43,7 @@ export default function CreateInstructionsForm() {
   };
 
   return (
-    <Tabs defaultValue="user">
+    <Tabs defaultValue="user" className="min-w-full">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger
           className="flex items-center gap-2"
@@ -68,15 +74,16 @@ export default function CreateInstructionsForm() {
               <form action={handleSubmit} className="flex flex-col gap-6">
                 <div>
                   <Label htmlFor="user_instructions">Instructions</Label>
-                  <Textarea
-                    value={instructions}
-                    onChange={(e) => setInstructions(e.target.value)}
-                    rows={8}
-                    cols={50}
-                    className={`w-full rounded shadow-md p-4 hover:bg-white/10 transition border`}
-                  />
+                  <ScrollArea className="h-48 p-4 w-full rounded-md border">
+                    <AutoSizeTextArea
+                      name="user_instructions"
+                      input={userInstructions}
+                      handleInputChange={(e) => setUserInstructions(e.target.value)}
+                      maxLength={1500}
+                    />
+                  </ScrollArea>
                 </div>
-                <Button type="submit">Create</Button>
+                <Button type="submit">Create <WordCount text={userInstructions} /></Button>
               </form>
             </div>
           </CardContent>
@@ -95,16 +102,16 @@ export default function CreateInstructionsForm() {
               <form action={handleSubmit} className="flex flex-col gap-6">
                 <div>
                   <Label htmlFor="agent_instructions">Instructions</Label>
-                  <Textarea
-                    name="agent_instructions"
-                    value={instructions}
-                    onChange={(e) => setInstructions(e.target.value)}
-                    rows={8}
-                    cols={50}
-                    className={`w-full rounded shadow-md p-4 hover:bg-white/10 transition border`}
-                  />
+                  <ScrollArea className="h-48 p-4 w-full rounded-md border">
+                    <AutoSizeTextArea
+                      name="agent_instructions"
+                      input={agentInstructions}
+                      handleInputChange={(e) => setAgentInstructions(e.target.value)}
+                      maxLength={1500}
+                    />
+                  </ScrollArea>
                 </div>
-                <Button type="submit">Create</Button>
+                <Button type="submit">Create <WordCount text={agentInstructions} /></Button>
               </form>
             </div>
           </CardContent>

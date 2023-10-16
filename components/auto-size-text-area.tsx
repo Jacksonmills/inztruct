@@ -1,12 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+'use client';
+
+import React, { ComponentProps, useEffect, useRef } from 'react';
+
+export interface AutoSizeTextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  input: string;
+  handleInputChange: ComponentProps<'textarea'>['onChange'];
+}
 
 export default function AutoSizeTextArea({
   input,
   handleInputChange,
-}: {
-  input: string;
-  handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-}) {
+  ...props
+}: AutoSizeTextareaProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const mirrorRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -16,8 +23,18 @@ export default function AutoSizeTextArea({
     }
   }, [input]);
 
+  useEffect(() => {
+    if (!containerRef.current && !textAreaRef.current) return;
+
+    const container = containerRef.current;
+
+    container?.addEventListener('click', () => {
+      textAreaRef.current?.focus();
+    });
+  }, []);
+
   return (
-    <div className="relative">
+    <div className="relative h-48" ref={containerRef}>
       <div
         ref={mirrorRef}
         className="absolute w-full left-0 top-0 overflow-hidden opacity-0 pointer-events-none"
@@ -26,11 +43,11 @@ export default function AutoSizeTextArea({
         {input}
       </div>
       <textarea
+        {...props}
         ref={textAreaRef}
         value={input}
         onChange={handleInputChange}
-        maxLength={1500}
-        className={`w-full min-w-max resize-none bg-transparent border-none focus:ring-0 focus:outline-none`}
+        className={`w-full min-w-max min-h-full resize-none bg-transparent border-none focus:ring-0 focus:outline-none`}
         style={{ overflow: 'hidden' }}
       />
     </div>

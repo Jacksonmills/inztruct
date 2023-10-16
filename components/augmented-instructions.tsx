@@ -63,6 +63,7 @@ export default function AugmentedInstructions({
           <AutoSizeTextArea
             input={input}
             handleInputChange={handleInputChange}
+            maxLength={1500}
           />
         </ScrollArea>
         {!isLoading && (
