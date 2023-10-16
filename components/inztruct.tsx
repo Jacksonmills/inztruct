@@ -14,11 +14,11 @@ export default function Inztruct({
     <Card>
       <CardHeader>
         {type === 'user' ? (
-          <span className="w-full flex items-center font-bold font-mono uppercase text-xl">
+          <span className="w-full flex items-center font-bold font-mono text-xl">
             👥 User
           </span>
         ) : (
-          <span className="w-full flex items-center font-bold font-mono uppercase text-xl">
+          <span className="w-full flex items-center font-bold font-mono text-xl">
             🕵️ Agent
           </span>
         )}

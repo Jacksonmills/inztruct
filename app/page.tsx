@@ -58,7 +58,7 @@ export default async function Home() {
             <Logo shouldBreak={true} />
           </span>
         </h1>
-        <p className="text-xl text-center lg:max-w-5xl">
+        <p className="text-xl text-center lg:max-w-3xl">
           <ServerChatCompletion
             prompt={`Welcome the user(${userName}(((always directly refer to ${userName}.)))) to our webapp called INZTRUCT(ELEVATOR PITCH:Store and augment instructions for LLM.). ((min: 3 words total. max: 5 words total.)). ((use the word "inztruct" in your message.))((use of word "welcome" not required.))((emojiLimit: 1))`}
           />
@@ -68,14 +68,14 @@ export default async function Home() {
       <div className="flex flex-col gap-6">
         <h2>
           <span className="text-2xl font-bold font-mono">
-            Example Instructions
+            Example instructions
           </span>
         </h2>
         <div className="grid lg:grid-cols-2 gap-8 grid-flow-row">
           <div className="flex flex-col gap-4">
             <Card>
               <CardHeader>
-                <CardTitle>👤 User Instructions</CardTitle>
+                <CardTitle>👤 User instructions</CardTitle>
                 <CardDescription>
                   What would you like ChatGPT to know about you to provide
                   better responses?
@@ -93,7 +93,7 @@ export default async function Home() {
           <div className="flex flex-col gap-4">
             <Card>
               <CardHeader>
-                <CardTitle>🕵️ Agent Instructions</CardTitle>
+                <CardTitle>🕵️ Agent instructions</CardTitle>
                 <CardDescription>
                   How would you like ChatGPT to respond? Assume a persona or a
                   role.

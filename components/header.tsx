@@ -42,7 +42,7 @@ export default function Header() {
               <Button>Create</Button>
             </Link>
             <Link href="/my-instructions">
-              <Button>My Instructions</Button>
+              <Button>My instructions</Button>
             </Link>
           </>
         )}
@@ -54,7 +54,7 @@ export default function Header() {
         <UserButton afterSignOutUrl={`/sign-in`} />
       ) : (
         <Link href="/sign-in">
-          <Button>Sign In</Button>
+          <Button>Sign in</Button>
         </Link>
       )}
     </header>

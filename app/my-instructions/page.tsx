@@ -1,4 +1,5 @@
 import Inztruct from '@/components/inztruct';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -23,12 +24,19 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-12 w-full">
-      <h1 className="font-extrabold text-4xl md:text-6xl">My Instructions</h1>
+      <h1 className="sr-only">My instructions page</h1>
+      <h2 className="font-extrabold text-4xl md:text-6xl">My instructions</h2>
       <div className="grid lg:grid-cols-2 gap-8 grid-flow-row">
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-bold font-mono sr-only">
-            User Instructions
-          </h2>
+          <Card>
+            <CardHeader>
+              <CardTitle>👤 User instructions</CardTitle>
+              <CardDescription>
+                What would you like ChatGPT to know about you to provide
+                better responses?
+              </CardDescription>
+            </CardHeader>
+          </Card>
           <div className="flex flex-col gap-8">
             {userData?.map(({ id, instructions }) => (
               <div key={id}>
@@ -38,9 +46,15 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-bold font-mono sr-only">
-            Agent Instructions
-          </h2>
+          <Card>
+            <CardHeader>
+              <CardTitle>🕵️ Agent instructions</CardTitle>
+              <CardDescription>
+                How would you like ChatGPT to respond? Assume a persona or a
+                role.
+              </CardDescription>
+            </CardHeader>
+          </Card>
           <div className="flex flex-col gap-8">
             {agentData?.map(({ id, instructions }) => (
               <div key={id}>
