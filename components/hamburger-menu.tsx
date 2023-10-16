@@ -22,7 +22,7 @@ export default function HamburgerMenu() {
       </SheetTrigger>
       <SheetContent side={`left`}>
         <SheetHeader className="flex gap-3">
-          <SheetTitle className='text-4xl'>
+          <SheetTitle className="text-4xl">
             <Logo />
           </SheetTitle>
           <nav className="flex flex-col gap-6">

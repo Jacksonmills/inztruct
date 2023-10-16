@@ -4,11 +4,11 @@ import { useUser } from '@clerk/nextjs';
 import { useChat } from 'ai/react';
 import React, { SyntheticEvent } from 'react';
 import { toast } from 'sonner';
+import AutoSizeTextArea from './auto-size-text-area';
 import LoadingBar from './loading-bar';
 import { Button } from './ui/button';
 import { ScrollArea } from './ui/scroll-area';
 import WordCount from './word-count';
-import AutoSizeTextArea from './auto-size-text-area';
 
 export default function AugmentedInstructions({
   type,
@@ -57,10 +57,13 @@ export default function AugmentedInstructions({
     lastMessage?.role === 'assistant' ? lastMessage.content : null;
 
   return (
-    <div className='flex flex-col gap-6'>
+    <div className="flex flex-col gap-6">
       <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full">
         <ScrollArea className="h-48 p-4 w-full rounded-md border">
-          <AutoSizeTextArea input={input} handleInputChange={handleInputChange} />
+          <AutoSizeTextArea
+            input={input}
+            handleInputChange={handleInputChange}
+          />
         </ScrollArea>
         {!isLoading && (
           <div className="flex gap-2">

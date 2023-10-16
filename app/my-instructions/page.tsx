@@ -1,5 +1,4 @@
 import Inztruct from '@/components/inztruct';
-import ServerChatCompletion from '@/components/server-chat-completion';
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -24,9 +23,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-12 w-full">
-      <h1 className="font-extrabold text-4xl md:text-6xl">
-        My Instructions
-      </h1>
+      <h1 className="font-extrabold text-4xl md:text-6xl">My Instructions</h1>
       <div className="grid lg:grid-cols-2 gap-8 grid-flow-row">
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-bold font-mono sr-only">
