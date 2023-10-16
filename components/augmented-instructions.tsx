@@ -59,7 +59,7 @@ export default function AugmentedInstructions({
   return (
     <div className="flex flex-col gap-6">
       <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full">
-        <ScrollArea className="h-48 p-4 w-full rounded-md border">
+        <ScrollArea className="h-48 p-4 w-full rounded-md border-2">
           <AutoSizeTextArea
             input={input}
             handleInputChange={handleInputChange}
@@ -101,7 +101,7 @@ export default function AugmentedInstructions({
               Your augmented instructions
             </h2>
             <div className="flex flex-col gap-4">
-              <ScrollArea className="h-48 p-4 w-full rounded-md border">
+              <ScrollArea className="h-48 p-4 w-full rounded-md border-2">
                 {augmentedInstructions}
               </ScrollArea>
               <Button

@@ -12,11 +12,16 @@ export default function Footer() {
       items-center
       w-full
       h-24
-      border-t
+      border-t-2
     "
     >
       <div className="text-2xl md:text-4xl mr-auto">
-        <Logo />
+        <span className="hidden md:flex">
+          <Logo />
+        </span>
+        <span className="flex md:hidden">
+          <Logo shouldBreak={true} />
+        </span>
       </div>
       <div className="flex items-center gap-2 lg:gap-6">
         <span

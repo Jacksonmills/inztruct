@@ -20,11 +20,17 @@ export default function Header() {
       items-center
       justify-between
       p-6
-      border-b
+      border-b-2
     "
     >
       <div className="flex md:hidden">
-        <HamburgerMenu />
+        {isSignedIn ? (
+          <HamburgerMenu />
+        ) : (
+          <Link href="/" className="text-lg">
+            <Logo shouldBreak={true} />
+          </Link>
+        )}
       </div>
       <nav className="hidden md:flex gap-6 items-center">
         <Link href="/" className="text-2xl md:text-4xl lg:text-6xl">
@@ -41,7 +47,9 @@ export default function Header() {
           </>
         )}
       </nav>
-      <LoopingEmoji />
+      <div className="hidden md:flex flex-grow">
+        <LoopingEmoji />
+      </div>
       {isSignedIn ? (
         <UserButton afterSignOutUrl={`/sign-in`} />
       ) : (

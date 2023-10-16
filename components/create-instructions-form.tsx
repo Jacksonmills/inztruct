@@ -74,7 +74,7 @@ export default function CreateInstructionsForm() {
               <form action={handleSubmit} className="flex flex-col gap-6">
                 <div>
                   <Label htmlFor="user_instructions">Instructions</Label>
-                  <ScrollArea className="h-48 p-4 w-full rounded-md border">
+                  <ScrollArea className="h-48 p-4 w-full rounded-md border-2">
                     <AutoSizeTextArea
                       name="user_instructions"
                       input={userInstructions}
@@ -106,7 +106,7 @@ export default function CreateInstructionsForm() {
               <form action={handleSubmit} className="flex flex-col gap-6">
                 <div>
                   <Label htmlFor="agent_instructions">Instructions</Label>
-                  <ScrollArea className="h-48 p-4 w-full rounded-md border">
+                  <ScrollArea className="h-48 p-4 w-full rounded-md border-2">
                     <AutoSizeTextArea
                       name="agent_instructions"
                       input={agentInstructions}

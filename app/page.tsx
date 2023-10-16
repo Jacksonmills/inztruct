@@ -51,7 +51,12 @@ export default async function Home() {
     <div className="flex flex-col gap-12 w-full">
       <div className="flex flex-col w-full items-center justify-center lg:p-32 gap-6">
         <h1 className="text-6xl lg:text-8xl flex items-center">
-          <Logo />
+          <span className="hidden md:flex">
+            <Logo />
+          </span>
+          <span className="flex md:hidden">
+            <Logo shouldBreak={true} />
+          </span>
         </h1>
         <p className="text-xl text-center lg:max-w-5xl">
           <ServerChatCompletion
