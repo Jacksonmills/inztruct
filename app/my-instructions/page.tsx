@@ -1,5 +1,10 @@
 import Inztruct from '@/components/inztruct';
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -32,8 +37,8 @@ export default async function Home() {
             <CardHeader>
               <CardTitle>👤 User instructions</CardTitle>
               <CardDescription>
-                What would you like ChatGPT to know about you to provide
-                better responses?
+                What would you like ChatGPT to know about you to provide better
+                responses?
               </CardDescription>
             </CardHeader>
           </Card>

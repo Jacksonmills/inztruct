@@ -2,6 +2,7 @@
 
 import { InstructionType, createInstructions } from '@/app/actions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useChat } from 'ai/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -14,11 +15,10 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
+import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { ScrollArea } from './ui/scroll-area';
 import WordCount from './word-count';
-import { Input } from './ui/input';
-import { useChat } from 'ai/react';
 
 export default function CreateInstructionsForm() {
   const [instructionType, setInstructionType] =
@@ -28,29 +28,22 @@ export default function CreateInstructionsForm() {
   const [promptInstructions, setPromptInstructions] = useState<string>('');
 
   const router = useRouter();
-  const {
-    input,
-    handleInputChange,
-    handleSubmit,
-    messages,
-    isLoading
-  } = useChat({
-    api: '/api/prompt-instructions',
-    body: {
-      type: instructionType,
-      instructions: promptInstructions,
-    },
-  });
+  const { input, handleInputChange, handleSubmit, messages, isLoading } =
+    useChat({
+      api: '/api/prompt-instructions',
+      body: {
+        type: instructionType,
+        instructions: promptInstructions,
+      },
+    });
 
-  const handlePrompt = (
-    e: React.FormEvent<HTMLFormElement>,
-  ) => {
+  const handlePrompt = (e: React.FormEvent<HTMLFormElement>) => {
     setPromptInstructions(input);
     handleSubmit(e);
 
     toast('Initial instructions generating...', {
       icon: '🧠',
-      duration: 5000,
+      duration: 10000,
     });
   };
 
@@ -76,7 +69,7 @@ export default function CreateInstructionsForm() {
     lastMessage?.role === 'assistant' ? lastMessage.content : null;
 
   return (
-    <div className='w-full flex flex-col gap-6'>
+    <div className="w-full flex flex-col gap-6">
       <Tabs defaultValue="user" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger
@@ -105,7 +98,10 @@ export default function CreateInstructionsForm() {
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="space-y-1">
-                <form action={handleSubmitCreate} className="flex flex-col gap-6">
+                <form
+                  action={handleSubmitCreate}
+                  className="flex flex-col gap-6"
+                >
                   <div>
                     <Label htmlFor="user_instructions">Instructions</Label>
                     <ScrollArea className="h-48 p-4 w-full rounded-md border-2">
@@ -137,7 +133,10 @@ export default function CreateInstructionsForm() {
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="space-y-1">
-                <form action={handleSubmitCreate} className="flex flex-col gap-6">
+                <form
+                  action={handleSubmitCreate}
+                  className="flex flex-col gap-6"
+                >
                   <div>
                     <Label htmlFor="agent_instructions">Instructions</Label>
                     <ScrollArea className="h-48 p-4 w-full rounded-md border-2">
@@ -161,11 +160,17 @@ export default function CreateInstructionsForm() {
         </TabsContent>
       </Tabs>
 
-      <div className='w-full flex flex-col gap-6'>
-        <div className='w-full flex flex-col gap-2'>
-          <h2 className="font-extrabold text-2xl md:text-4xl">Prompt initial instructions</h2>
+      <div className="w-full flex flex-col gap-6">
+        <div className="w-full flex flex-col gap-2">
+          <h2 className="font-extrabold text-2xl md:text-4xl">
+            Prompt initial instructions
+          </h2>
           <form onSubmit={handlePrompt}>
-            <Input value={input} onChange={handleInputChange} placeholder='Ask GPT to create an initial instructions prompt...' />
+            <Input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Ask GPT to create an initial instructions prompt..."
+            />
           </form>
         </div>
         <output className="w-full">

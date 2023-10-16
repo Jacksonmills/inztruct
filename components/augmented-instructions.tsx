@@ -47,7 +47,7 @@ export default function AugmentedInstructions({
     formPromise.then(() => {
       toast('Instructions augmenting...', {
         icon: '🧪',
-        duration: 5000,
+        duration: 10000,
       });
     });
   };
