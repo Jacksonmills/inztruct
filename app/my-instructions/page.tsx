@@ -25,7 +25,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-12 w-full">
       <h1 className="font-extrabold text-4xl md:text-6xl">
-        <ServerChatCompletion prompt="An h1 title for the users page of saved/stored instructions.((min:2. max:5))((Do not wrap in quotes))" />
+        My Instructions
       </h1>
       <div className="grid lg:grid-cols-2 gap-8 grid-flow-row">
         <div className="flex flex-col gap-4">

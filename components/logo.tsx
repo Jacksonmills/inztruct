@@ -1,8 +1,8 @@
 export const Logo = () => {
   return (
-    <span className="font-extrabold">
-      <span className="italic">IN</span>ZTRU
-      <span className="italic-reverse">CT</span>
+    <span className="font-extrabold logo-bend">
+      <span className="logo-italic">INZT</span>
+      <span className="logo-italic-reverse">RUCT</span>
     </span>
   );
 };

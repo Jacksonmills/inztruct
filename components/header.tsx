@@ -23,7 +23,7 @@ export default function Header() {
         <HamburgerMenu />
       </div>
       <nav className="hidden md:flex gap-6 items-center">
-        <Link href="/" className="text-4xl md:text-6xl">
+        <Link href="/" className="text-2xl md:text-4xl lg:text-6xl">
           <Logo />
         </Link>
         <SignedIn>

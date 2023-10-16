@@ -1,6 +1,7 @@
 import Inztruct from '@/components/inztruct';
 import { Logo } from '@/components/logo';
 import ServerChatCompletion from '@/components/server-chat-completion';
+import TiltedMarquee from '@/components/tilted-marquee';
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -42,16 +43,17 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-12 w-full">
-      <div className="flex flex-col w-full items-center justify-center p-32 gap-6">
-        <h1 className="text-8xl">
+      <div className="flex flex-col w-full items-center justify-center lg:p-32 gap-6">
+        <h1 className="text-6xl lg:text-8xl">
           <Logo />
         </h1>
-        <p className="text-xl">
+        <p className="text-xl text-center lg:max-w-5xl">
           <ServerChatCompletion
             prompt={`Welcome the user(${userName}(((always directly refer to ${userName}.)))) to our webapp called INZTRUCT(ELEVATOR PITCH:Store and augment instructions for LLM.). ((min: 3 words total. max: 5 words total.)). ((use the word "inztruct" in your message.))((use of word "welcome" not required.))((emojiLimit: 1))`}
           />
         </p>
       </div>
+      <TiltedMarquee />
       <div className="flex flex-col gap-6">
         <h2>
           <span className="text-2xl font-bold font-mono">

@@ -76,3 +76,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+.marquee-seamless .rfm-marquee {
+  display: flex;
+  gap: 48px;
+}

@@ -8,6 +8,7 @@ import LoadingBar from './loading-bar';
 import { Button } from './ui/button';
 import { ScrollArea } from './ui/scroll-area';
 import WordCount from './word-count';
+import AutoSizeTextArea from './auto-size-text-area';
 
 export default function AugmentedInstructions({
   type,
@@ -56,23 +57,17 @@ export default function AugmentedInstructions({
     lastMessage?.role === 'assistant' ? lastMessage.content : null;
 
   return (
-    <>
+    <div className='flex flex-col gap-6'>
       <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full">
         <ScrollArea className="h-48 p-4 w-full rounded-md border">
-          <textarea
-            value={input}
-            onChange={handleInputChange}
-            maxLength={1500}
-            rows={60}
-            className={`w-full min-w-max resize-none h-auto bg-transparent border-none focus:ring-0 focus:outline-none`}
-          />
+          <AutoSizeTextArea input={input} handleInputChange={handleInputChange} />
         </ScrollArea>
         {!isLoading && (
           <div className="flex gap-2">
             <Button type="submit" className="w-full" disabled={!isSignedIn}>
               {isSignedIn ? (
                 <>
-                  Augment Instructions <WordCount text={input} />
+                  Augment <WordCount text={input} />
                 </>
               ) : (
                 'Sign in to augment'
@@ -80,6 +75,7 @@ export default function AugmentedInstructions({
             </Button>
             <Button
               type="button"
+              variant="ghost"
               size={`icon`}
               onClick={() => {
                 navigator.clipboard.writeText(input);
@@ -97,11 +93,9 @@ export default function AugmentedInstructions({
       <output className="w-full">
         {augmentedInstructions && (
           <div className="flex flex-col gap-4">
-            <div>
-              <h2 className="sm:text-4xl text-3xl font-mono font-bold">
-                Your augmented instructions
-              </h2>
-            </div>
+            <h2 className="sm:text-4xl text-3xl font-mono font-bold">
+              Your augmented instructions
+            </h2>
             <div className="flex flex-col gap-4">
               <ScrollArea className="h-48 p-4 w-full rounded-md border">
                 {augmentedInstructions}
@@ -120,6 +114,6 @@ export default function AugmentedInstructions({
           </div>
         )}
       </output>
-    </>
+    </div>
   );
 }

@@ -78,10 +78,15 @@ module.exports = {
     require('tailwindcss-animate'),
     plugin(({ addUtilities }) => {
       const newUtilities = {
-        '.italic-reverse': {
+        '.logo-italic-reverse': {
           display: 'inline-block',
           transform:
             'scale(1) rotate(0deg) translate(0px, 0px) skew(20deg, 0deg)',
+        },
+        '.logo-italic': {
+          display: 'inline-block',
+          transform:
+            'scale(1) rotate(0deg) translate(0px, 0px) skew(-20deg, 0deg)',
         },
       };
 

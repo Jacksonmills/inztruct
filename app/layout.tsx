@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Header />
-          <main className="flex min-h-screen flex-col items-center p-6 md:p-24">
+          <main className="flex min-h-screen flex-col items-center p-6 md:p-24 overflow-hidden">
             {children}
           </main>
           <Footer />
