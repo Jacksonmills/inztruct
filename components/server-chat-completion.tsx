@@ -26,7 +26,11 @@ export default async function ServerChatCompletion({
 
   const reader = stream.getReader();
 
-  return <Suspense fallback={null}>{await Reader({ reader })}</Suspense>;
+  return (
+    <Suspense>
+      <Reader reader={reader} />
+    </Suspense>
+  );
 }
 
 async function Reader({
@@ -45,7 +49,9 @@ async function Reader({
   return (
     <span>
       {text}
-      <Suspense fallback={null}>{await Reader({ reader })}</Suspense>
+      <Suspense>
+        <Reader reader={reader} />
+      </Suspense>
     </span>
   );
 }
