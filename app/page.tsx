@@ -2,7 +2,12 @@ import Inztruct from '@/components/inztruct';
 import { Logo } from '@/components/logo';
 import ServerChatCompletion from '@/components/server-chat-completion';
 import TiltedMarquee from '@/components/tilted-marquee';
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -67,8 +72,8 @@ export default async function Home() {
               <CardHeader>
                 <CardTitle>👤 User Instructions</CardTitle>
                 <CardDescription>
-                  What would you like ChatGPT to know about you to provide better
-                  responses?
+                  What would you like ChatGPT to know about you to provide
+                  better responses?
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -85,7 +90,8 @@ export default async function Home() {
               <CardHeader>
                 <CardTitle>🕵️ Agent Instructions</CardTitle>
                 <CardDescription>
-                  How would you like ChatGPT to respond? Assume a persona or a role.
+                  How would you like ChatGPT to respond? Assume a persona or a
+                  role.
                 </CardDescription>
               </CardHeader>
             </Card>

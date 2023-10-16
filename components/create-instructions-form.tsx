@@ -17,7 +17,6 @@ import {
 import { Label } from './ui/label';
 import { ScrollArea } from './ui/scroll-area';
 import WordCount from './word-count';
-import next from 'next';
 
 export default function CreateInstructionsForm() {
   const [instructionType, setInstructionType] =
@@ -28,7 +27,8 @@ export default function CreateInstructionsForm() {
   const router = useRouter();
   const handleSubmit = () => {
     let nextInstructions = userInstructions;
-    if (instructionType === 'agent_instructions') nextInstructions = agentInstructions;
+    if (instructionType === 'agent_instructions')
+      nextInstructions = agentInstructions;
     createInstructions(instructionType, nextInstructions)
       .then(() => {
         toast.success('Instructions created');
@@ -78,12 +78,16 @@ export default function CreateInstructionsForm() {
                     <AutoSizeTextArea
                       name="user_instructions"
                       input={userInstructions}
-                      handleInputChange={(e) => setUserInstructions(e.target.value)}
+                      handleInputChange={(e) =>
+                        setUserInstructions(e.target.value)
+                      }
                       maxLength={1500}
                     />
                   </ScrollArea>
                 </div>
-                <Button type="submit">Create <WordCount text={userInstructions} /></Button>
+                <Button type="submit">
+                  Create <WordCount text={userInstructions} />
+                </Button>
               </form>
             </div>
           </CardContent>
@@ -106,12 +110,16 @@ export default function CreateInstructionsForm() {
                     <AutoSizeTextArea
                       name="agent_instructions"
                       input={agentInstructions}
-                      handleInputChange={(e) => setAgentInstructions(e.target.value)}
+                      handleInputChange={(e) =>
+                        setAgentInstructions(e.target.value)
+                      }
                       maxLength={1500}
                     />
                   </ScrollArea>
                 </div>
-                <Button type="submit">Create <WordCount text={agentInstructions} /></Button>
+                <Button type="submit">
+                  Create <WordCount text={agentInstructions} />
+                </Button>
               </form>
             </div>
           </CardContent>
