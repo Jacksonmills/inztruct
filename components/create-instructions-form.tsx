@@ -25,7 +25,8 @@ export default function CreateInstructionsForm() {
     useState<InstructionType>('user_instructions');
   const [userInstructions, setUserInstructions] = useState<string>('');
   const [agentInstructions, setAgentInstructions] = useState<string>('');
-  const [promptInstructionsInput, setPromptInstructionsInput] = useState<string>('');
+  const [promptInstructionsInput, setPromptInstructionsInput] =
+    useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [body, setBody] = useState({
     type: instructionType,
@@ -58,14 +59,16 @@ export default function CreateInstructionsForm() {
     new Promise((resolve) => {
       setPromptInstructionsInput(input);
       resolve(null);
-    }).then(() => {
-      handleSubmit(e);
-    }).then(() => {
-      toast('Initial instructions generating...', {
-        icon: '🧠',
-        duration: 10000,
+    })
+      .then(() => {
+        handleSubmit(e);
+      })
+      .then(() => {
+        toast('Initial instructions generating...', {
+          icon: '🧠',
+          duration: 10000,
+        });
       });
-    });
   };
 
   const lastMessage = messages[messages.length - 1];
@@ -151,7 +154,14 @@ export default function CreateInstructionsForm() {
                       />
                     </ScrollArea>
                   </div>
-                  <Button type="submit" disabled={isSubmitting || isLoading || userInstructions.length > 1500}>
+                  <Button
+                    type="submit"
+                    disabled={
+                      isSubmitting ||
+                      isLoading ||
+                      userInstructions.length > 1500
+                    }
+                  >
                     {isSubmitting ? (
                       'Creating...'
                     ) : (
@@ -192,7 +202,14 @@ export default function CreateInstructionsForm() {
                       />
                     </ScrollArea>
                   </div>
-                  <Button type="submit" disabled={isSubmitting || isLoading || agentInstructions.length > 1500}>
+                  <Button
+                    type="submit"
+                    disabled={
+                      isSubmitting ||
+                      isLoading ||
+                      agentInstructions.length > 1500
+                    }
+                  >
                     {isSubmitting ? (
                       'Creating...'
                     ) : (
@@ -213,7 +230,10 @@ export default function CreateInstructionsForm() {
           <h2 className="font-extrabold text-2xl md:text-4xl">
             Prompt initial instructions
           </h2>
-          <p>Results may be more than the maximum 1500 character limit. Please edit to desired length before creating.</p>
+          <p>
+            Results may be more than the maximum 1500 character limit. Please
+            edit to desired length before creating.
+          </p>
           <form onSubmit={handlePrompt}>
             <Input
               value={input}
