@@ -11,6 +11,7 @@ import {
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import Balancer from 'react-wrap-balancer';
 
 export const revalidate = 0;
 
@@ -59,9 +60,11 @@ export default async function Home() {
           </span>
         </h1>
         <p className="text-xl text-center lg:max-w-3xl">
-          <ServerChatCompletion
-            prompt={`Welcome the user(${userName}(((always directly refer to ${userName}.)))) to our webapp called INZTRUCT(ELEVATOR PITCH:Store and augment instructions for LLM.). ((min: 3 words total. max: 5 words total.)). ((use the word "inztruct" in your message.))((use of word "welcome" not required.))((emojiLimit: 1))`}
-          />
+          <Balancer>
+            <ServerChatCompletion
+              prompt={`Welcome the user(${userName}(((always directly refer to ${userName}.)))) to our webapp called INZTRUCT(ELEVATOR PITCH:Store and augment instructions for LLM.). ((min: 3 words total. max: 5 words total.)). ((use the word "inztruct" in your message.))((use of word "welcome" not required.))((emojiLimit: 1))`}
+            />
+          </Balancer>
         </p>
       </div>
       <TiltedMarquee />
