@@ -11,7 +11,7 @@ const openai = new OpenAIApi(config);
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
-  const { type, instructions } = await req.json();
+  const { type, prompt } = await req.json();
 
   // Ask OpenAI for a streaming completion given the prompt
   const response = await openai.createChatCompletion({
@@ -20,7 +20,10 @@ export async function POST(req: Request) {
     messages: [
       {
         role: 'user',
-        content: `Create an initial prompt for the ${type} below:\n\n${instructions}`,
+        content: `Generate a markdown document no more than 1500 characters. It must be a set of initial instructions in the style of ChatGPT Custom instructions for ${type}:\n\n${prompt} following ${type === 'user'
+          ? 'User Instructions: What would you like ChatGPT to know about you to provide better responses?'
+          : 'Agent Instructions: How would you like ChatGPT to respond?'
+          }. Keep each "custom instructions" within a 1500 character limit to align with platform constraints like those in ChatGPT apps.`,
       },
     ],
   });
