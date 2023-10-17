@@ -4,7 +4,7 @@ import { InstructionType, createInstructions } from '@/app/actions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useChat } from 'ai/react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import AutoSizeTextArea from './auto-size-text-area';
 import { Button } from './ui/button';
@@ -25,35 +25,75 @@ export default function CreateInstructionsForm() {
     useState<InstructionType>('user_instructions');
   const [userInstructions, setUserInstructions] = useState<string>('');
   const [agentInstructions, setAgentInstructions] = useState<string>('');
-  const [promptInstructions, setPromptInstructions] = useState<string>('');
+  const [promptInstructionsInput, setPromptInstructionsInput] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [body, setBody] = useState({
+    type: instructionType,
+    prompt: promptInstructionsInput,
+  });
+
+  const instructionTypeRef = useRef(instructionType);
+
+  useEffect(() => {
+    instructionTypeRef.current = instructionType;
+  }, [instructionType]);
+
+  useEffect(() => {
+    setBody({
+      type: instructionType,
+      prompt: promptInstructionsInput,
+    });
+  }, [instructionType, promptInstructionsInput]);
 
   const router = useRouter();
   const { input, handleInputChange, handleSubmit, messages, isLoading } =
     useChat({
       api: '/api/prompt-instructions',
-      body: {
-        type: instructionType,
-        instructions: promptInstructions,
-      },
+      body: body,
     });
 
   const handlePrompt = (e: React.FormEvent<HTMLFormElement>) => {
-    setPromptInstructions(input);
-    handleSubmit(e);
+    e.preventDefault();
 
-    toast('Initial instructions generating...', {
-      icon: '🧠',
-      duration: 10000,
+    new Promise((resolve) => {
+      setPromptInstructionsInput(input);
+      resolve(null);
+    }).then(() => {
+      handleSubmit(e);
+    }).then(() => {
+      toast('Initial instructions generating...', {
+        icon: '🧠',
+        duration: 10000,
+      });
     });
   };
 
+  const lastMessage = messages[messages.length - 1];
+  let generatedInstructions =
+    lastMessage?.role === 'assistant' ? lastMessage.content : null;
+
+  useEffect(() => {
+    if (!generatedInstructions) return;
+
+    if (instructionTypeRef.current === 'user_instructions') {
+      setUserInstructions(generatedInstructions);
+    } else {
+      setAgentInstructions(generatedInstructions);
+    }
+  }, [generatedInstructions]);
+
   const handleSubmitCreate = () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     let nextInstructions = userInstructions;
     if (instructionType === 'agent_instructions')
       nextInstructions = agentInstructions;
     createInstructions(instructionType, nextInstructions)
       .then(() => {
         toast.success('Instructions created');
+      })
+      .then(() => {
+        setIsSubmitting(false);
       })
       .then(() => {
         return router.push('/my-instructions');
@@ -63,10 +103,6 @@ export default function CreateInstructionsForm() {
         return;
       });
   };
-
-  const lastMessage = messages[messages.length - 1];
-  const generatedInstructions =
-    lastMessage?.role === 'assistant' ? lastMessage.content : null;
 
   return (
     <div className="w-full flex flex-col gap-6">
@@ -115,8 +151,14 @@ export default function CreateInstructionsForm() {
                       />
                     </ScrollArea>
                   </div>
-                  <Button type="submit">
-                    Create <WordCount text={userInstructions} />
+                  <Button type="submit" disabled={isSubmitting || isLoading || userInstructions.length > 1500}>
+                    {isSubmitting ? (
+                      'Creating...'
+                    ) : (
+                      <>
+                        Create <WordCount text={userInstructions} />
+                      </>
+                    )}
                   </Button>
                 </form>
               </div>
@@ -150,8 +192,14 @@ export default function CreateInstructionsForm() {
                       />
                     </ScrollArea>
                   </div>
-                  <Button type="submit">
-                    Create <WordCount text={agentInstructions} />
+                  <Button type="submit" disabled={isSubmitting || isLoading || agentInstructions.length > 1500}>
+                    {isSubmitting ? (
+                      'Creating...'
+                    ) : (
+                      <>
+                        Create <WordCount text={agentInstructions} />
+                      </>
+                    )}
                   </Button>
                 </form>
               </div>
@@ -165,6 +213,7 @@ export default function CreateInstructionsForm() {
           <h2 className="font-extrabold text-2xl md:text-4xl">
             Prompt initial instructions
           </h2>
+          <p>Results may be more than the maximum 1500 character limit. Please edit to desired length before creating.</p>
           <form onSubmit={handlePrompt}>
             <Input
               value={input}
@@ -173,7 +222,7 @@ export default function CreateInstructionsForm() {
             />
           </form>
         </div>
-        <output className="w-full">
+        {/* <output className="w-full">
           {generatedInstructions && (
             <div className="flex flex-col gap-4">
               <h2 className="sm:text-4xl text-3xl font-mono font-bold">
@@ -196,7 +245,7 @@ export default function CreateInstructionsForm() {
               </div>
             </div>
           )}
-        </output>
+        </output> */}
       </div>
     </div>
   );
