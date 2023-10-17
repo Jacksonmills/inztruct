@@ -11,9 +11,8 @@ import {
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { Suspense } from 'react';
 import Balancer from 'react-wrap-balancer';
-
-export const revalidate = 0;
 
 function shuffleData(data: Record<string, any>[]) {
   const shuffled = [...data];
@@ -23,7 +22,7 @@ function shuffleData(data: Record<string, any>[]) {
     shuffled[i] = shuffled[j];
     shuffled[j] = temp;
   }
-  return shuffled;
+  return shuffled.slice(0, 3);
 }
 
 export default async function Home() {
@@ -33,13 +32,11 @@ export default async function Home() {
 
   const { data: userData, error: userError } = await supabase
     .from('user_instructions')
-    .select()
-    .limit(3);
+    .select();
 
   const { data: agentData, error: agentError } = await supabase
     .from('agent_instructions')
-    .select()
-    .limit(3);
+    .select();
 
   if (userError || agentError) return <div>error</div>;
 
@@ -59,12 +56,14 @@ export default async function Home() {
             <Logo shouldBreak={true} />
           </span>
         </h1>
-        <p className="text-xl text-center lg:max-w-3xl">
-          <Balancer>
-            <ServerChatCompletion
-              prompt={`Welcome the user(${userName}(((always directly refer to ${userName}.)))) to our webapp called INZTRUCT(ELEVATOR PITCH:Store and augment instructions for LLM.). ((min: 3 words total. max: 5 words total.)). ((use the word "inztruct" in your message.))((use of word "welcome" not required.))((emojiLimit: 1))`}
-            />
-          </Balancer>
+        <p className="text-xl text-center lg:max-w-3xl min-h-[4em]">
+          <Suspense>
+            <Balancer>
+              <ServerChatCompletion
+                prompt={`Welcome the user(${userName}(((always directly refer to ${userName}.)))) to our webapp called INZTRUCT(ELEVATOR PITCH:Store and augment instructions for LLM.). ((min: 3 words total. max: 5 words total.)). ((use the word "inztruct" in your message.))((use of word "welcome" not required.))((emojiLimit: 1))`}
+              />
+            </Balancer>
+          </Suspense>
         </p>
       </div>
       <TiltedMarquee />

@@ -1,4 +1,5 @@
 import Inztruct from '@/components/inztruct';
+import LoopingEmoji from '@/components/looping-emoji';
 import {
   Card,
   CardDescription,
@@ -8,6 +9,7 @@ import {
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { Suspense } from 'react';
 
 export const revalidate = 0;
 
@@ -41,13 +43,18 @@ export default async function Home() {
                 responses?
               </CardDescription>
             </CardHeader>
+            {/* <CardFooter>
+              <Input name="search_user_instructions" placeholder="Search user instructions" />
+            </CardFooter> */}
           </Card>
           <div className="flex flex-col gap-8">
-            {userData?.map(({ id, instructions }) => (
-              <div key={id}>
-                <Inztruct type={`user`} instructions={instructions} />
-              </div>
-            ))}
+            <Suspense fallback={<LoopingEmoji />}>
+              {userData?.map(({ id, instructions }) => (
+                <div key={id}>
+                  <Inztruct type={`user`} instructions={instructions} />
+                </div>
+              ))}
+            </Suspense>
           </div>
         </div>
         <div className="flex flex-col gap-4">
@@ -61,11 +68,13 @@ export default async function Home() {
             </CardHeader>
           </Card>
           <div className="flex flex-col gap-8">
-            {agentData?.map(({ id, instructions }) => (
-              <div key={id}>
-                <Inztruct type={`agent`} instructions={instructions} />
-              </div>
-            ))}
+            <Suspense fallback={<LoopingEmoji />}>
+              {agentData?.map(({ id, instructions }) => (
+                <div key={id}>
+                  <Inztruct type={`agent`} instructions={instructions} />
+                </div>
+              ))}
+            </Suspense>
           </div>
         </div>
       </div>

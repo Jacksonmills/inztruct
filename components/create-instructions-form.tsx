@@ -242,30 +242,6 @@ export default function CreateInstructionsForm() {
             />
           </form>
         </div>
-        {/* <output className="w-full">
-          {generatedInstructions && (
-            <div className="flex flex-col gap-4">
-              <h2 className="sm:text-4xl text-3xl font-mono font-bold">
-                Your initial instructions
-              </h2>
-              <div className="flex flex-col gap-4">
-                <ScrollArea className="h-48 p-4 w-full rounded-md border-2">
-                  {generatedInstructions}
-                </ScrollArea>
-                <Button
-                  onClick={() => {
-                    navigator.clipboard.writeText(generatedInstructions);
-                    toast('Instructions copied to clipboard', {
-                      icon: '📋',
-                    });
-                  }}
-                >
-                  📋 Copy initial instructions
-                </Button>
-              </div>
-            </div>
-          )}
-        </output> */}
       </div>
     </div>
   );
