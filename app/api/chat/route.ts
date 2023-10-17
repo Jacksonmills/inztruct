@@ -20,11 +20,10 @@ export async function POST(req: Request) {
     messages: [
       {
         role: 'user',
-        content: `Generate a single paragraph no more than 1500 characters, comprehensive and focused "custom instructions" style prompt based on the "${instructions}" given and following ${
-          type === 'user'
-            ? 'User Instructions: What would you like ChatGPT to know about you to provide better responses?'
-            : 'Agent Instructions: How would you like ChatGPT to respond?'
-        }. Keep each "custom instructions" within a 1500 character limit to align with platform constraints like those in ChatGPT apps.`,
+        content: `Generate a markdown document no more than 1500 characters, comprehensive and focused "chatgpt custom instructions" style prompt based on the "${instructions}" given and following ${type === 'user'
+          ? 'User Instructions: What would you like ChatGPT to know about you to provide better responses?'
+          : 'Agent Instructions: How would you like ChatGPT to respond?'
+          }. Keep each "custom instructions" within a 1500 character limit to align with platform constraints like those in ChatGPT apps.`,
       },
     ],
   });
