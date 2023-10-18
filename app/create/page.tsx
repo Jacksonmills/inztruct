@@ -1,5 +1,5 @@
-import CreateInstructionsForm from '@/components/create-instructions-form';
 import { createInstructions } from '@/app/actions';
+import CreateInstructionsForm from '@/components/create-instructions-form';
 
 export default async function Home() {
   return (

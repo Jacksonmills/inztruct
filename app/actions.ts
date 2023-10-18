@@ -47,7 +47,10 @@ export const createInstructions = async (
   return data;
 };
 
-export const deleteInstructions = async (instructionType: InstructionType, id: number) => {
+export const deleteInstructions = async (
+  instructionType: InstructionType,
+  id: number
+) => {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
 

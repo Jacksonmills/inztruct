@@ -1,8 +1,10 @@
 import Inztruct from '@/components/inztruct';
 import LoopingEmoji from '@/components/looping-emoji';
+import Search from '@/components/search';
 import {
   Card,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -13,19 +15,59 @@ import { Suspense } from 'react';
 
 export const revalidate = 0;
 
-export default async function Home() {
+async function fetchInstructions(type: string, searchString: string) {
   const user = await currentUser();
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  let query = supabase
+    .from(type)
+    .select()
+    .eq('clerk_id', user?.id);
 
-  const { data: userData, error: userError } = await supabase
-    .from('user_instructions')
-    .select()
-    .eq('clerk_id', user?.id);
-  const { data: agentData, error: agentError } = await supabase
-    .from('agent_instructions')
-    .select()
-    .eq('clerk_id', user?.id);
+  if (searchString !== '') {
+    query = query.textSearch('instructions', searchString);
+  }
+
+  const { data, error } = await query.select();
+
+  if (error) {
+    return { error };
+  }
+
+  return { data };
+}
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const userSearch = searchParams['user_instructions_search'] as
+    | string
+    | undefined;
+  const agentSearch = searchParams['agent_instructions_search'] as
+    | string
+    | undefined;
+  const userSearchString = userSearch
+    ? handleSearchStringForSupabase(userSearch)
+    : '';
+  const agentSearchString = agentSearch
+    ? handleSearchStringForSupabase(agentSearch)
+    : '';
+
+  function handleSearchStringForSupabase(searchString: string) {
+    if (!searchString.includes('-')) return searchString;
+    return searchString.split('-').join(' | ');
+  }
+
+  const { data: userData, error: userError } = await fetchInstructions(
+    'user_instructions',
+    userSearchString
+  );
+  const { data: agentData, error: agentError } = await fetchInstructions(
+    'agent_instructions',
+    agentSearchString
+  );
 
   if (userError || agentError) return <div>error</div>;
 
@@ -43,15 +85,20 @@ export default async function Home() {
                 responses?
               </CardDescription>
             </CardHeader>
-            {/* <CardFooter>
-              <Input name="search_user_instructions" placeholder="Search user instructions" />
-            </CardFooter> */}
+            <CardFooter>
+              <Search type="user_instructions" search={userSearchString} />
+            </CardFooter>
           </Card>
           <div className="flex flex-col gap-8">
             <Suspense fallback={<LoopingEmoji />}>
               {userData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct instructionId={id} type={`user_instructions`} instructions={instructions} editable={true} />
+                  <Inztruct
+                    instructionId={id}
+                    type={`user_instructions`}
+                    instructions={instructions}
+                    editable={true}
+                  />
                 </div>
               ))}
             </Suspense>
@@ -66,12 +113,20 @@ export default async function Home() {
                 role.
               </CardDescription>
             </CardHeader>
+            <CardFooter>
+              <Search type="agent_instructions" search={agentSearchString} />
+            </CardFooter>
           </Card>
           <div className="flex flex-col gap-8">
             <Suspense fallback={<LoopingEmoji />}>
               {agentData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct instructionId={id} type={`agent_instructions`} instructions={instructions} editable={true} />
+                  <Inztruct
+                    instructionId={id}
+                    type={`agent_instructions`}
+                    instructions={instructions}
+                    editable={true}
+                  />
                 </div>
               ))}
             </Suspense>

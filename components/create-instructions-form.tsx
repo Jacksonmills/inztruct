@@ -23,7 +23,10 @@ import WordCount from './word-count';
 export default function CreateInstructionsForm({
   createInstructions,
 }: {
-  createInstructions: (type: InstructionType, instructions: string) => Promise<any>;
+  createInstructions: (
+    type: InstructionType,
+    instructions: string
+  ) => Promise<any>;
 }) {
   const [instructionType, setInstructionType] =
     useState<InstructionType>('user_instructions');
@@ -104,7 +107,8 @@ export default function CreateInstructionsForm({
       })
       .catch(() => {
         toast.error('Instructions failed to create');
-      }).finally(() => {
+      })
+      .finally(() => {
         router.replace('/my-instructions');
       });
   };

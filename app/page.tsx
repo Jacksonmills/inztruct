@@ -87,7 +87,11 @@ export default async function Home() {
             <div className="flex flex-col gap-8">
               {shuffledUserData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct instructionId={id} type="user_instructions" instructions={instructions} />
+                  <Inztruct
+                    instructionId={id}
+                    type="user_instructions"
+                    instructions={instructions}
+                  />
                 </div>
               ))}
             </div>
@@ -105,7 +109,11 @@ export default async function Home() {
             <div className="flex flex-col gap-8">
               {shuffledAgentData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct instructionId={id} type="agent_instructions" instructions={instructions} />
+                  <Inztruct
+                    instructionId={id}
+                    type="agent_instructions"
+                    instructions={instructions}
+                  />
                 </div>
               ))}
             </div>

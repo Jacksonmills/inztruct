@@ -29,7 +29,12 @@ export default function Inztruct({
         )}
       </CardHeader>
       <CardContent>
-        <AugmentedInstructions instructionId={instructionId} type={type} text={instructions} editable={editable} />
+        <AugmentedInstructions
+          instructionId={instructionId}
+          type={type}
+          text={instructions}
+          editable={editable}
+        />
       </CardContent>
     </Card>
   );
