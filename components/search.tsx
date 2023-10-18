@@ -1,7 +1,6 @@
 'use client';
 
 import { InstructionType } from '@/app/actions';
-import { SearchIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from './ui/button';
@@ -43,12 +42,12 @@ const Search = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex gap-2'>
+    <form onSubmit={handleSubmit} className="flex gap-2 w-full">
       <Input
         value={text}
-        placeholder="Search instructions..."
+        placeholder="Search..."
         onChange={(e) => setText(e.target.value)}
-        className='inline-flex flex-grow'
+        className="inline-flex flex-grow"
       />
 
       <Button type="submit">Search</Button>

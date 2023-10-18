@@ -11,8 +11,6 @@ import {
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import { Suspense } from 'react';
-import Balancer from 'react-wrap-balancer';
 
 function shuffleData(data: Record<string, any>[]) {
   const shuffled = [...data];
@@ -56,15 +54,11 @@ export default async function Home() {
             <Logo shouldBreak={true} />
           </span>
         </h1>
-        <p className="text-xl text-center min-h-[4em]">
-          <Suspense>
-            <Balancer>
-              <ServerChatCompletion
-                prompt={`Welcome the user(${userName}(((always directly refer to ${userName}.)))) to our webapp called INZTRUCT(ELEVATOR PITCH:Store and augment instructions for LLM.). ((min: 3 words total. max: 5 words total.)). ((use the word "inztruct" in your message.))((use of word "welcome" not required.))((emojiLimit: 1))`}
-              />
-            </Balancer>
-          </Suspense>
-        </p>
+        <div className="text-xl text-center min-h-[4em] lg:max-w-[50vw]">
+          <ServerChatCompletion
+            prompt={`Welcome the user(${userName}(((always directly refer to ${userName}.)))) to our webapp called INZTRUCT(ELEVATOR PITCH:Store and augment instructions for LLM.). ((min: 3 words total. max: 5 words total.)). ((use the word "inztruct" in your message.))((use of word "welcome" not required.))((emojiLimit: 1))`}
+          />
+        </div>
       </div>
       <TiltedMarquee />
       <div className="flex flex-col gap-6">
