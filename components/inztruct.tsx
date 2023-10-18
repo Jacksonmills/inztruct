@@ -1,19 +1,24 @@
 'use client';
 
+import { InstructionType } from '@/app/actions';
 import AugmentedInstructions from './augmented-instructions';
 import { Card, CardContent, CardHeader } from './ui/card';
 
 export default function Inztruct({
+  instructionId,
   type,
   instructions,
+  editable = false,
 }: {
-  type: string;
+  instructionId: number;
+  type: InstructionType;
   instructions: string;
+  editable?: boolean;
 }) {
   return (
     <Card>
       <CardHeader>
-        {type === 'user' ? (
+        {type === 'user_instructions' ? (
           <span className="w-full flex items-center font-bold font-mono text-xl">
             👥 User
           </span>
@@ -24,7 +29,7 @@ export default function Inztruct({
         )}
       </CardHeader>
       <CardContent>
-        <AugmentedInstructions type={type} text={instructions} />
+        <AugmentedInstructions instructionId={instructionId} type={type} text={instructions} editable={editable} />
       </CardContent>
     </Card>
   );

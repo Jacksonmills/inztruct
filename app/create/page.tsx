@@ -1,4 +1,5 @@
 import CreateInstructionsForm from '@/components/create-instructions-form';
+import { createInstructions } from '@/app/actions';
 
 export default async function Home() {
   return (
@@ -6,7 +7,7 @@ export default async function Home() {
       <h1 className="font-extrabold text-4xl md:text-6xl">
         Create instructions
       </h1>
-      <CreateInstructionsForm />
+      <CreateInstructionsForm createInstructions={createInstructions} />
     </div>
   );
 }

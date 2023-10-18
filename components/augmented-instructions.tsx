@@ -1,7 +1,9 @@
 'use client';
 
+import { InstructionType, deleteInstructions } from '@/app/actions';
 import { useUser } from '@clerk/nextjs';
 import { useChat } from 'ai/react';
+import { useRouter } from 'next/navigation';
 import React, { SyntheticEvent } from 'react';
 import { toast } from 'sonner';
 import AutoSizeTextArea from './auto-size-text-area';
@@ -11,13 +13,18 @@ import { ScrollArea } from './ui/scroll-area';
 import WordCount from './word-count';
 
 export default function AugmentedInstructions({
+  instructionId,
   type,
   text,
+  editable = false,
 }: {
-  type: string;
+  instructionId: number;
+  type: InstructionType;
   text: string;
+  editable?: boolean;
 }) {
   const { isSignedIn } = useUser();
+  const router = useRouter();
   const [instructions, setInstructions] = React.useState<string>(text);
 
   const {
@@ -34,6 +41,20 @@ export default function AugmentedInstructions({
       instructions,
     },
   });
+
+  const onDelete = () => {
+    deleteInstructions(type, instructionId)
+      .then(() => {
+        toast('Instructions deleted', {
+          icon: '🗑️',
+        });
+      })
+      .catch(() => {
+        toast('Error deleting instructions', {
+          icon: '💢',
+        });
+      });
+  };
 
   const onSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     setInstructions('');
@@ -77,6 +98,14 @@ export default function AugmentedInstructions({
                 'Sign in to augment'
               )}
             </Button>
+            {editable && (
+              <>
+                <Button type="button">Edit</Button>
+                <Button type="button" onClick={onDelete}>
+                  Delete
+                </Button>
+              </>
+            )}
             <Button
               type="button"
               variant="ghost"

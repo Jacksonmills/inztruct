@@ -1,6 +1,6 @@
 'use client';
 
-import { InstructionType, createInstructions } from '@/app/actions';
+import { InstructionType } from '@/app/actions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useChat } from 'ai/react';
 import { useRouter } from 'next/navigation';
@@ -20,7 +20,11 @@ import { Label } from './ui/label';
 import { ScrollArea } from './ui/scroll-area';
 import WordCount from './word-count';
 
-export default function CreateInstructionsForm() {
+export default function CreateInstructionsForm({
+  createInstructions,
+}: {
+  createInstructions: (type: InstructionType, instructions: string) => Promise<any>;
+}) {
   const [instructionType, setInstructionType] =
     useState<InstructionType>('user_instructions');
   const [userInstructions, setUserInstructions] = useState<string>('');
@@ -98,12 +102,10 @@ export default function CreateInstructionsForm() {
       .then(() => {
         setIsSubmitting(false);
       })
-      .then(() => {
-        return router.push('/my-instructions');
-      })
       .catch(() => {
         toast.error('Instructions failed to create');
-        return;
+      }).finally(() => {
+        router.replace('/my-instructions');
       });
   };
 

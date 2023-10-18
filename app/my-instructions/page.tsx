@@ -51,7 +51,7 @@ export default async function Home() {
             <Suspense fallback={<LoopingEmoji />}>
               {userData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct type={`user`} instructions={instructions} />
+                  <Inztruct instructionId={id} type={`user_instructions`} instructions={instructions} editable={true} />
                 </div>
               ))}
             </Suspense>
@@ -71,7 +71,7 @@ export default async function Home() {
             <Suspense fallback={<LoopingEmoji />}>
               {agentData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct type={`agent`} instructions={instructions} />
+                  <Inztruct instructionId={id} type={`agent_instructions`} instructions={instructions} editable={true} />
                 </div>
               ))}
             </Suspense>

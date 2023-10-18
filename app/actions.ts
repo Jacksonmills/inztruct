@@ -2,6 +2,7 @@
 
 import { currentUser } from '@clerk/nextjs';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export type InstructionType = 'user_instructions' | 'agent_instructions';
@@ -42,5 +43,24 @@ export const createInstructions = async (
     return;
   }
 
+  revalidatePath('/my-instructions');
+  return data;
+};
+
+export const deleteInstructions = async (instructionType: InstructionType, id: number) => {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+
+  const { data, error } = await supabase
+    .from(instructionType)
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  revalidatePath('/my-instructions');
   return data;
 };

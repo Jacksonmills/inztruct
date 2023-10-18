@@ -56,7 +56,7 @@ export default async function Home() {
             <Logo shouldBreak={true} />
           </span>
         </h1>
-        <p className="text-xl text-center lg:max-w-3xl min-h-[4em]">
+        <p className="text-xl text-center min-h-[4em]">
           <Suspense>
             <Balancer>
               <ServerChatCompletion
@@ -87,7 +87,7 @@ export default async function Home() {
             <div className="flex flex-col gap-8">
               {shuffledUserData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct type="user" instructions={instructions} />
+                  <Inztruct instructionId={id} type="user_instructions" instructions={instructions} />
                 </div>
               ))}
             </div>
@@ -105,7 +105,7 @@ export default async function Home() {
             <div className="flex flex-col gap-8">
               {shuffledAgentData?.map(({ id, instructions }) => (
                 <div key={id}>
-                  <Inztruct type="agent" instructions={instructions} />
+                  <Inztruct instructionId={id} type="agent_instructions" instructions={instructions} />
                 </div>
               ))}
             </div>
